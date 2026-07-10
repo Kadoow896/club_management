@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- List View -->
+    <record id="view_club_task_tree" model="ir.ui.view">
+        <field name="name">club.task.tree</field>
+        <field name="model">club.task</field>
+        <field name="arch" type="xml">
+            <list string="Tasks">
+                <field name="name"/>
+                <field name="member_id"/>
+                <field name="deadline"/>
+                <field name="state"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_club_task_form" model="ir.ui.view">
+        <field name="name">club.task.form</field>
+        <field name="model">club.task</field>
+        <field name="arch" type="xml">
+            <form string="Task">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="member_id"/>
+                        <field name="deadline"/>
+                        <field name="state"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_club_task" model="ir.actions.act_window">
+        <field name="name">Tasks</field>
+        <field name="res_model">club.task</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- Menu -->
+    <menuitem id="menu_club_tasks"
+              name="Tasks"
+              parent="menu_club_management_root"
+              action="action_club_task"/>
+
+</odoo>
