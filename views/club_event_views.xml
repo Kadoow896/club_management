@@ -1,0 +1,95 @@
+<odoo>
+    <record id="view_club_event_form" model="ir.ui.view">
+        <field name="name">club.event.form</field>
+        <field name="model">club.event</field>
+        <field name="arch" type="xml">
+            <form string="Workshop / Event">
+                <header>
+                    <button name="action_confirm" type="object" string="Confirm" class="oe_highlight" invisible="state != 'draft'"/>
+                    <button name="action_done" type="object" string="Mark Done" class="oe_highlight" invisible="state != 'confirmed'"/>
+                    <button name="action_cancel" type="object" string="Cancel" invisible="state in ('done', 'cancelled')"/>
+                    <button name="action_reset_draft" type="object" string="Reset to Draft" invisible="state != 'cancelled'"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,done"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_attendance" type="object" class="oe_stat_button" icon="fa-users">
+                            <field name="attendee_count" widget="statinfo" string="Attendees"/>
+                        </button>
+                        <button name="action_view_tasks" type="object" class="oe_stat_button" icon="fa-tasks">
+                            <field name="task_count" widget="statinfo" string="Tasks"/>
+                        </button>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="event_date"/>
+                            <field name="event_time" widget="float_time"/>
+                        </group>
+                        <group>
+                            <field name="presenter_name"/>
+                            <field name="location"/>
+                        </group>
+                    </group>
+                    <group string="Description">
+                        <field name="description" nolabel="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_club_event_tree" model="ir.ui.view">
+        <field name="name">club.event.tree</field>
+        <field name="model">club.event</field>
+        <field name="arch" type="xml">
+            <list string="Workshops / Events">
+                <field name="name"/>
+                <field name="event_date"/>
+                <field name="event_time" widget="float_time"/>
+                <field name="presenter_name"/>
+                <field name="location" optional="hide"/>
+                <field name="state" widget="badge" decoration-success="state == 'done'" decoration-info="state == 'confirmed'" decoration-danger="state == 'cancelled'"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_club_event_calendar" model="ir.ui.view">
+        <field name="name">club.event.calendar</field>
+        <field name="model">club.event</field>
+        <field name="arch" type="xml">
+            <calendar string="Workshops / Events" date_start="event_date" color="state" quick_add="False">
+                <field name="name"/>
+                <field name="presenter_name"/>
+            </calendar>
+        </field>
+    </record>
+
+    <record id="view_club_event_search" model="ir.ui.view">
+        <field name="name">club.event.search</field>
+        <field name="model">club.event</field>
+        <field name="arch" type="xml">
+            <search string="Search Workshops / Events">
+                <field name="name"/>
+                <field name="presenter_name"/>
+                <filter string="Draft" name="filter_draft" domain="[('state', '=', 'draft')]"/>
+                <filter string="Confirmed" name="filter_confirmed" domain="[('state', '=', 'confirmed')]"/>
+                <filter string="Done" name="filter_done" domain="[('state', '=', 'done')]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Status" name="group_by_state" context="{'group_by': 'state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_club_events" model="ir.actions.act_window">
+        <field name="name">Workshops / Events</field>
+        <field name="res_model">club.event</field>
+        <field name="view_mode">calendar,list,form</field>
+        <field name="search_view_id" ref="view_club_event_search"/>
+    </record>
+
+    <menuitem id="menu_club_events" name="Events &amp; Workshops"
+              parent="menu_club_management_root"
+              action="action_club_events"/>
+</odoo>

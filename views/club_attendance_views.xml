@@ -1,0 +1,57 @@
+<odoo>
+    <record id="view_club_attendance_form" model="ir.ui.view">
+        <field name="name">club.attendance.form</field>
+        <field name="model">club.attendance</field>
+        <field name="arch" type="xml">
+            <form string="Attendance">
+                <sheet>
+                    <group>
+                        <field name="event_id"/>
+                        <field name="member_id"/>
+                        <field name="attended"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_club_attendance_tree" model="ir.ui.view">
+        <field name="name">club.attendance.list</field>
+        <field name="model">club.attendance</field>
+        <field name="arch" type="xml">
+            <list string="Attendance" editable="bottom">
+                <field name="event_id"/>
+                <field name="member_id"/>
+                <field name="attended" widget="boolean_toggle"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_club_attendance_search" model="ir.ui.view">
+        <field name="name">club.attendance.search</field>
+        <field name="model">club.attendance</field>
+        <field name="arch" type="xml">
+            <search string="Search Attendance">
+                <field name="event_id"/>
+                <field name="member_id"/>
+                <filter string="Attended" name="filter_attended" domain="[('attended', '=', True)]"/>
+                <filter string="Not Attended" name="filter_not_attended" domain="[('attended', '=', False)]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Workshop / Event" name="group_by_event" context="{'group_by': 'event_id'}"/>
+                    <filter string="Member" name="group_by_member" context="{'group_by': 'member_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_club_attendance" model="ir.actions.act_window">
+        <field name="name">Attendance</field>
+        <field name="res_model">club.attendance</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_club_attendance_search"/>
+    </record>
+
+    <menuitem id="menu_club_attendance" name="Attendance"
+              parent="menu_club_management_root"
+              action="action_club_attendance"/>
+</odoo>

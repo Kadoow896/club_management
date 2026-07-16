@@ -1,0 +1,98 @@
+<odoo>
+    <record id="view_club_task_form" model="ir.ui.view">
+        <field name="name">club.task.form</field>
+        <field name="model">club.task</field>
+        <field name="arch" type="xml">
+            <form string="Task">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="event_id"/>
+                            <field name="member_id"/>
+                        </group>
+                        <group>
+                            <field name="due_date"/>
+                            <field name="priority" widget="priority"/>
+                            <field name="state"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_club_task_tree" model="ir.ui.view">
+        <field name="name">club.task.list</field>
+        <field name="model">club.task</field>
+        <field name="arch" type="xml">
+            <list string="Tasks" editable="bottom">
+                <field name="name"/>
+                <field name="event_id"/>
+                <field name="member_id"/>
+                <field name="due_date"/>
+                <field name="priority" widget="priority"/>
+                <field name="state"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_club_task_kanban" model="ir.ui.view">
+        <field name="name">club.task.kanban</field>
+        <field name="model">club.task</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="state">
+                <field name="name"/>
+                <field name="event_id"/>
+                <field name="member_id"/>
+                <field name="due_date"/>
+                <field name="priority"/>
+                <templates>
+                    <t t-name="card">
+                        <div class="oe_kanban_card oe_kanban_global_click">
+                            <div class="o_kanban_record_title"><field name="name"/></div>
+                            <div><field name="event_id"/></div>
+                            <div t-if="record.member_id.value">
+                                <i class="fa fa-user"/> <field name="member_id"/>
+                            </div>
+                            <div t-if="record.due_date.value">
+                                <i class="fa fa-calendar"/> <field name="due_date"/>
+                            </div>
+                            <field name="priority" widget="priority"/>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="view_club_task_search" model="ir.ui.view">
+        <field name="name">club.task.search</field>
+        <field name="model">club.task</field>
+        <field name="arch" type="xml">
+            <search string="Search Tasks">
+                <field name="name"/>
+                <field name="event_id"/>
+                <field name="member_id"/>
+                <filter string="High Priority" name="filter_high_priority" domain="[('priority', '=', '1')]"/>
+                <filter string="Unassigned" name="filter_unassigned" domain="[('member_id', '=', False)]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Status" name="group_by_state" context="{'group_by': 'state'}"/>
+                    <filter string="Workshop / Event" name="group_by_event" context="{'group_by': 'event_id'}"/>
+                    <filter string="Assigned To" name="group_by_member" context="{'group_by': 'member_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_club_task" model="ir.actions.act_window">
+        <field name="name">Tasks</field>
+        <field name="res_model">club.task</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="search_view_id" ref="view_club_task_search"/>
+    </record>
+
+    <menuitem id="menu_club_task" name="Tasks"
+              parent="menu_club_management_root"
+              action="action_club_task"/>
+</odoo>

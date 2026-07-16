@@ -1,0 +1,22 @@
+<odoo>
+    <record id="module_category_club_management" model="ir.module.category">
+        <field name="name">Club Management</field>
+        <field name="sequence">20</field>
+    </record>
+
+    <!-- Regular member: can see everything, can update their own
+         attendance/task status, but cannot create or delete records. -->
+    <record id="group_club_member" model="res.groups">
+        <field name="name">Member</field>
+        <field name="category_id" ref="module_category_club_management"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+    </record>
+
+    <!-- Club officer / organizer: full control over members, events,
+         attendance and tasks. -->
+    <record id="group_club_manager" model="res.groups">
+        <field name="name">Manager</field>
+        <field name="category_id" ref="module_category_club_management"/>
+        <field name="implied_ids" eval="[(4, ref('group_club_member'))]"/>
+    </record>
+</odoo>

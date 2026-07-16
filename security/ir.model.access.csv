@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_club_member_manager,club.member.manager,model_club_member,group_club_manager,1,1,1,1
+access_club_member_member,club.member.member,model_club_member,group_club_member,1,0,0,0
+access_club_event_manager,club.event.manager,model_club_event,group_club_manager,1,1,1,1
+access_club_event_member,club.event.member,model_club_event,group_club_member,1,0,0,0
+access_club_attendance_manager,club.attendance.manager,model_club_attendance,group_club_manager,1,1,1,1
+access_club_attendance_member,club.attendance.member,model_club_attendance,group_club_member,1,1,0,0
+access_club_task_manager,club.task.manager,model_club_task,group_club_manager,1,1,1,1
+access_club_task_member,club.task.member,model_club_task,group_club_member,1,1,0,0

@@ -1,0 +1,80 @@
+<odoo>
+    <record id="view_club_member_form" model="ir.ui.view">
+        <field name="name">club.member.form</field>
+        <field name="model">club.member</field>
+        <field name="arch" type="xml">
+            <form string="Club Member">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_attendance" type="object" class="oe_stat_button" icon="fa-check-square-o">
+                            <field name="attended_event_count" widget="statinfo" string="Events Attended"/>
+                        </button>
+                    </div>
+                    <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active"/>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="university_id"/>
+                            <field name="major"/>
+                            <field name="track"/>
+                        </group>
+                        <group>
+                            <field name="email" widget="email"/>
+                            <field name="phone" widget="phone"/>
+                            <field name="join_date"/>
+                            <field name="active" invisible="1"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_club_member_tree" model="ir.ui.view">
+        <field name="name">club.member.tree</field>
+        <field name="model">club.member</field>
+        <field name="arch" type="xml">
+            <list string="Club Members">
+                <field name="name"/>
+                <field name="university_id"/>
+                <field name="major"/>
+                <field name="track"/>
+                <field name="email"/>
+                <field name="phone"/>
+                <field name="join_date" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_club_member_search" model="ir.ui.view">
+        <field name="name">club.member.search</field>
+        <field name="model">club.member</field>
+        <field name="arch" type="xml">
+            <search string="Search Members">
+                <field name="name"/>
+                <field name="university_id"/>
+                <field name="major"/>
+                <filter string="Developers" name="filter_developer" domain="[('track', '=', 'developer')]"/>
+                <filter string="Designers" name="filter_designer" domain="[('track', '=', 'designer')]"/>
+                <filter string="Organizers" name="filter_organizer" domain="[('track', '=', 'organizer')]"/>
+                <separator/>
+                <filter string="Archived" name="filter_archived" domain="[('active', '=', False)]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Technical Track" name="group_by_track" context="{'group_by': 'track'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_club_members" model="ir.actions.act_window">
+        <field name="name">Club Members</field>
+        <field name="res_model">club.member</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_club_member_search"/>
+    </record>
+
+    <menuitem id="menu_club_management_root" name="Club Management"/>
+    <menuitem id="menu_club_members" name="Members"
+              parent="menu_club_management_root"
+              action="action_club_members"/>
+</odoo>
