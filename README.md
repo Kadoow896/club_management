@@ -13,16 +13,19 @@ The system helps manage club operations in one place, including:
 
 ## Features
 
-- Manage club members and their technical tracks.
-- Create and organize events and workshops.
-- Record attendance for each event.
-- Assign tasks and monitor their progress.
+- Manage club members: technical track, contact info, join date, with archiving for former members.
+- Create and organize events/workshops with a status flow (Draft → Confirmed → Done/Cancelled) and a calendar view.
+- Record attendance per event with a one-click toggle.
+- Assign and track tasks with due dates, priority, and a Kanban board grouped by status.
+- Role-based access: separate **Manager** (full control) and **Member** (read/update) permission groups.
+- Search filters and group-by views across members, events, attendance, and tasks.
 - Centralized dashboard for club administration.
 
 ## Technologies Used
 
 - Odoo 19
 - Python
+- XML (views)
 - PostgreSQL
 - Git & GitHub
 
@@ -38,14 +41,14 @@ The system helps manage club operations in one place, including:
 
 ## My Contribution
 
-I contributed to the development of the **Events Module**, including event management features and related functionality within the Odoo system.
+I developed the **Events Module** (workshop scheduling, status workflow, calendar view, attendee/task stat buttons), and extended the shared foundation across all four modules: added the Manager/Member permission groups, additional fields (contact info, due dates, priority), the Task Kanban board, and search/filter views.
 
 ## Future Improvements
 
 - Email notifications
-- Role-based permissions
 - Analytics dashboard
 - Mobile-friendly interface
+- Automated tests
 
 ## License
 
